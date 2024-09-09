@@ -19,8 +19,8 @@ This example calculates the energy for the Na+ He system
 """
 
 #  separations in Bohr
-N_r = 101
-r_vals = np.linspace(10.,2.0,num=N_r) / radii.BOHR
+N_r = 20
+r_vals = np.linspace(6.,2.0,num=N_r) / radii.BOHR
 nstates = 0 
 energies = np.zeros((r_vals.shape[0],nstates+1))
 
@@ -89,7 +89,7 @@ Na    G
       '''}
 
 # set to STO-3G for a quick calculation
-basis_set = "STO-3G"
+#basis_set = "STO-3G"
 
 
 #MM region parameters
