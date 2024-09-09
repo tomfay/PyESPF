@@ -169,7 +169,7 @@ class QMMMPol:
 
 
         # options for the QM/MM
-        self.charge_op_method = "esp" # default charge operator
+        self.charge_op_method = "espf" # default charge operator
         self.dipole_op_method = None # default dipole oeprator method
         self.esp_grid = (8,38) # number of radial and angular grid points for ESP operator evaluation
         self.l_max_Q = 0
@@ -761,7 +761,7 @@ class QMMMPol:
             return self.generateMullikenChargeOperators(overlaps=overlaps,ao_atom_inds=ao_atom_inds,mol=mol)
         elif method=="lowdin":
             return self.generateLowdinChargeOperators(overlaps=overlaps,ao_atom_inds=ao_atom_inds)
-        elif method=="esp":
+        elif method=="espf":
             return self.generateESPChargeOperators(overlaps=overlaps,mol=mol)
         else:
             raise Exception("Charge operator method,", method," not recognised.")
@@ -862,11 +862,11 @@ class QMMMPol:
         if mf.__class__.__name__ == "RHF":
             self.mf_drf = scf.RHF(mf.mol)
             self.mf_copy = scf.RHF(mf.mol)
-            print("RHF DRF")
+            #print("RHF DRF")
         elif mf.__class__.__name__ == "UHF":
             self.mf_drf = scf.UHF(mf.mol)
             self.mf_copy = scf.UHF(mf.mol)
-            print("UHF DRF")
+            #print("UHF DRF")
             
         elif mf.__class__.__name__ == "RKS" or mf.__class__.__name__ == "UKS":
             if mf.__class__.__name__ == "RKS":
@@ -874,12 +874,12 @@ class QMMMPol:
                 self.mf_drf = dft.RKS(mf.mol,xc="HF")
                 #self.mf_drf = scf.RHF(mf.mol)
                 self.mf_copy = dft.RKS(mf.mol,xc=mf.xc)
-                print("RKS DRF")
+                #print("RKS DRF")
             elif mf.__class__.__name__ == "UKS":
                 self.mf_drf = dft.UKS(mf.mol,xc="HF")
                 #self.mf_drf = scf.UHF(mf.mol)
                 self.mf_copy = dft.UKS(mf.mol,xc=mf.xc)
-                print("UKS DRF")
+                #print("UKS DRF")
             
             
             
@@ -896,12 +896,12 @@ class QMMMPol:
             aux_basis = mf.auxbasis
             self.mf_drf = scf.RHF(mf.mol).density_fit(auxbasis=aux_basis)
             self.mf_copy = scf.RHF(mf.mol).density_fit(auxbasis=aux_basis)
-            print("DFRHF DRF")
+            #print("DFRHF DRF")
         elif mf.__class__.__name__ == "DFUHF":
             aux_basis = mf.auxbasis
             self.mf_drf = scf.UHF(mf.mol).density_fit(auxbasis=aux_basis)
             self.mf_copy = scf.UHF(mf.mol).density_fit(auxbasis=aux_basis)
-            print("DFUHF DRF")
+            #print("DFUHF DRF")
             
         elif mf.__class__.__name__ == "DFRKS" or mf.__class__.__name__ == "DFUKS":
             if mf.__class__.__name__ == "DFRKS":
@@ -909,12 +909,12 @@ class QMMMPol:
                 aux_basis = mf.auxbasis
                 self.mf_drf = dft.RKS(mf.mol).density_fit(auxbasis=aux_basis)
                 self.mf_copy = dft.RKS(mf.mol,xc=mf.xc).density_fit(auxbasis=aux_basis)
-                print("DFRKS DRF")
+                #print("DFRKS DRF")
             elif mf.__class__.__name__ == "DFUKS":
                 aux_basis = mf.auxbasis
                 self.mf_drf = dft.UKS(mf.mol).density_fit(auxbasis=aux_basis)
                 self.mf_copy = dft.UKS(mf.mol,xc=mf.xc).density_fit(auxbasis=aux_basis)
-                print("DFUKS DRF")
+                #print("DFUKS DRF")
             
             self.mf_drf.xc = 'HF*1.0' 
             
